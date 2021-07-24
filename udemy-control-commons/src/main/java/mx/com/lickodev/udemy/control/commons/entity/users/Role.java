@@ -8,14 +8,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import lombok.Data;
 
-
 @Data
 @Entity
-@Table(name = "roles")
-public class Role implements Serializable{
+@Table(name = "roles", uniqueConstraints = {
+		@UniqueConstraint(columnNames = { "roleName" }, name = "unique_role_role_name_constraint") })
+public class Role implements Serializable {
 
 	/**
 	 * 
@@ -25,8 +26,8 @@ public class Role implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@Column(unique = true, length = 30)
+
+	@Column(length = 30)
 	private String roleName;
-	
+
 }

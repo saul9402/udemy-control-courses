@@ -6,6 +6,10 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import mx.com.lickodev.udemy.control.commons.entity.users.User;
 
+/**
+ * @author saul_ https://codeboje.de/spring-data-rest-tutorial/
+ *
+ */
 @RepositoryRestResource(path = "users")
 public interface UsersRepository extends JpaRepository<User, Long> {
 

@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,7 +21,12 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "persons")
+/**
+ * Los columnNames harán referencia a la propiedad en Java no en la BD
+ * https://stackoverflow.com/questions/32160370/hibernate-constraint-name
+ */
+@Table(name = "persons", uniqueConstraints = {
+		@UniqueConstraint(columnNames = { "email" }, name = "unique_persons_email_constraint") })
 @EqualsAndHashCode(of = { "id", "email" })
 /**
  * https://www.dineshonjava.com/hibernate/implementing-inheritance-in-hibernate/
@@ -49,7 +55,7 @@ public class Person implements Serializable {
 	@Column(length = 60)
 	private String secondSurname;
 
-	@Column(length = 560, unique = true, nullable = false)
+	@Column(length = 560, nullable = false)
 	private String email;
 
 }
