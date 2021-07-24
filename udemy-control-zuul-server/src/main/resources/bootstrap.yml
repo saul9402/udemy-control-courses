@@ -1,0 +1,22 @@
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+spring:
+  application:
+    name: stocktaking-zuul-server
+  cloud:
+    config:
+      uri:
+      - http://localhost:8888
+      label: master
+  profiles:
+    active:
+    - dev
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+        - "*"
+server:  port: ${PORT:0}

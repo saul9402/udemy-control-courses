@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: stocktacking-config-server
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/saul9402/stocktaking-config.git
+          username: saul9402
+          password: W8f!4%H%Y7xV5oqIW&
+server:
+  port: 8888
