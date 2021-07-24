@@ -6,7 +6,7 @@ eureka:
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
 spring:
   application:
-    name: stocktaking-ms-users
+    name: udemy-control-ms-users
   cloud:
     config:
       uri:
