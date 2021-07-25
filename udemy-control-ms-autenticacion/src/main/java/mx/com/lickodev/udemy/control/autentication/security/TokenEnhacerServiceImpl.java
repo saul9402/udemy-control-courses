@@ -27,6 +27,7 @@ public class TokenEnhacerServiceImpl implements TokenEnhancer {
 		aditionalTokenInfo.put("firstSurname", usuario.getFirstSurname());
 		aditionalTokenInfo.put("secondSurname", usuario.getSecondSurname());
 		aditionalTokenInfo.put("email", usuario.getEmail());
+		//aditionalTokenInfo.put("roles", usuario.getRoles());
 		DefaultOAuth2AccessToken defaultOAuth2AccessToken = (DefaultOAuth2AccessToken) accessToken;
 		defaultOAuth2AccessToken.setAdditionalInformation(aditionalTokenInfo);
 		return defaultOAuth2AccessToken;
