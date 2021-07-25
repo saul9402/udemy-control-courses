@@ -10,11 +10,11 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
-	<groupId>mx.com.lickodev.stocktaking</groupId>
-	<artifactId>stocktaking-eureka-server</artifactId>
+	<groupId>mx.com.lickodev</groupId>
+	<artifactId>eureka-server</artifactId>
 	<version>1</version>
-	<name>stocktaking-eureka-server</name>
-	<description>Demo project for Spring Boot</description>
+	<name>eureka-server</name>
+	<description>Proyecto de Eureka server</description>
 
 	<properties>
 		<java.version>14</java.version>

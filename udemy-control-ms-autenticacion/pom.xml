@@ -9,10 +9,10 @@
 		<version>2.3.9.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>mx.com.lickodev.stocktaking</groupId>
-	<artifactId>stocktaking-ms-autenticacion</artifactId>
+	<groupId>mx.com.lickodev</groupId>
+	<artifactId>ms-autenticacion</artifactId>
 	<version>1</version>
-	<name>stocktaking-ms-autenticacion</name>
+	<name>ms-autenticacion</name>
 	<description>Microservicio para autenticacion</description>
 
 	<properties>
@@ -23,8 +23,8 @@
 	<dependencies>
 
 		<dependency>
-			<groupId>mx.com.lickodev.stocktaking</groupId>
-			<artifactId>stocktaking-commons</artifactId>
+			<groupId>mx.com.lickodev</groupId>
+			<artifactId>ms-commons</artifactId>
 			<version>1</version>
 		</dependency>
 

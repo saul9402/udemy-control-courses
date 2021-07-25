@@ -10,10 +10,10 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
-	<groupId>mx.com.lickodev.stocktaking</groupId>
-	<artifactId>stocktaking-config-server</artifactId>
+	<groupId>mx.com.lickodev</groupId>
+	<artifactId>config-server</artifactId>
 	<version>0.0.1</version>
-	<name>stocktaking-config-server</name>
+	<name>config-server</name>
 	<description>Proyecto servicio de configuracion</description>
 
 	<properties>

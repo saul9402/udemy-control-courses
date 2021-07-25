@@ -10,11 +10,11 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
-	<groupId>mx.com.lickodev.stocktaking</groupId>
-	<artifactId>stocktaking-commons</artifactId>
+	<groupId>mx.com.lickodev</groupId>
+	<artifactId>ms-commons</artifactId>
 	<version>1</version>
-	<name>stocktaking-commons</name>
-	<description>Demo project for Spring Boot</description>
+	<name>ms-commons</name>
+	<description>Proyecto que gestiona las entidades y todo lo que sea comun a dos o más proyectos.</description>
 
 	<properties>
 		<java.version>14</java.version>
