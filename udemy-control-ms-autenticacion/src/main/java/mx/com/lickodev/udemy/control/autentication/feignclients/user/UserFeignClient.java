@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import mx.com.lickodev.udemy.control.commons.entity.users.User;
 
-@FeignClient(name = "stocktaking-ms-users")
+@FeignClient(name = "udemy-control-ms-users")
 public interface UserFeignClient {
 
 	@GetMapping(value = "/users/search/findByUserName")
