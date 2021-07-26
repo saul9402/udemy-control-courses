@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.springframework.data.rest.core.RepositoryConstraintViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import mx.com.lickodev.udemy.control.commons.exceptions.ProductNotFoundException;
+import mx.com.lickodev.udemy.control.commons.exceptions.CourseNotFoundException;
 import mx.com.lickodev.udemy.control.commons.exceptions.UserNotFoundException;
 
 /**
@@ -31,6 +32,9 @@ import mx.com.lickodev.udemy.control.commons.exceptions.UserNotFoundException;
  *         -https://github.com/jovannypcg/exception_handler
  * 
  *         -https://zetcode.com/springboot/controlleradvice/
+ * 
+ *         PENDIENTE:
+ *         https://stackoverflow.com/questions/21150688/how-can-i-handle-exceptions-with-spring-data-rest-and-the-pagingandsortingreposi/44581156
  */
 @RestControllerAdvice
 public class ControllerAdvice extends ResponseEntityExceptionHandler {
@@ -56,7 +60,7 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
 	}
 
 	/**
-	 * Eset captura las excepciones que se marcan en el valor del @ExceptionHandler
+	 * Este captura las excepciones que se marcan en el valor del @ExceptionHandler
 	 * y te permite manipularlas para darles formato o algo antes de enviarlas a
 	 * quien solicitó la petición, de esta forma puedes dar una mejor presentación a
 	 * los mensajes de error.
@@ -67,7 +71,7 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
 	 * @return un objeto que contiene los errores conformato e información adicional
 	 *         para el solicitante
 	 */
-	@ExceptionHandler({ UserNotFoundException.class, ProductNotFoundException.class })
+	@ExceptionHandler({ UserNotFoundException.class, CourseNotFoundException.class })
 	public ResponseEntity<Object> handleNotFoundException(Exception ex, WebRequest request) {
 
 		Map<String, Object> body = new LinkedHashMap<>();
@@ -76,6 +80,24 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
 
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
 
+	}
+
+	/**
+	 * https://www.baeldung.com/spring-data-rest-validators;
+	 * https://stackoverflow.com/questions/24318405/spring-data-rest-validator
+	 * 
+	 * @param ex
+	 * @param request
+	 * @return
+	 */
+	@ExceptionHandler({ RepositoryConstraintViolationException.class })
+	public ResponseEntity<Object> handleAccessDeniedException(Exception ex, WebRequest request) {
+		RepositoryConstraintViolationException nevEx = (RepositoryConstraintViolationException) ex;
+
+		String errors = nevEx.getErrors().getAllErrors().stream().map(Object::toString)
+				.collect(Collectors.joining("\n"));
+
+		return new ResponseEntity<>(errors, new HttpHeaders(), HttpStatus.PARTIAL_CONTENT);
 	}
 
 }

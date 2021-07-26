@@ -41,7 +41,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 	public void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests().antMatchers("/api/authentication/oauth/**").permitAll()
 				.antMatchers(HttpMethod.GET, "/api/users/users/**").permitAll().antMatchers("/api/users/**").permitAll()
-				.anyRequest().authenticated().and().cors().configurationSource(corsConfigurationSource());
+				.antMatchers(HttpMethod.GET, "/api/courses/courses/**").permitAll().antMatchers("/api/courses/**")
+				.permitAll().anyRequest().authenticated().and().cors().configurationSource(corsConfigurationSource());
 	}
 
 	@Bean

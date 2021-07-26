@@ -1,21 +1,21 @@
 package mx.com.lickodev.udemy.control.commons.exceptions;
 
-public class ProductNotFoundException extends Exception {
+public class CourseNotFoundException extends Exception {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public ProductNotFoundException() {
+	public CourseNotFoundException() {
 		super();
 	}
 
-	public ProductNotFoundException(String message) {
+	public CourseNotFoundException(String message) {
 		super(message);
 	}
 
-	public ProductNotFoundException(String message, Throwable cause) {
+	public CourseNotFoundException(String message, Throwable cause) {
 		super(message, cause);
 	}
 

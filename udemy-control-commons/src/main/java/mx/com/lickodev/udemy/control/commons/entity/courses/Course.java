@@ -26,7 +26,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "courses", uniqueConstraints = {
 		@UniqueConstraint(columnNames = { "name" }, name = "unique_name_course_contraint"),
 		@UniqueConstraint(columnNames = { "url" }, name = "unique_url_course_contraint") })
-//https://www.baeldung.com/spring-data-rest-validators
+//https://www.baeldung.com/spring-data-rest-validators; https://stackoverflow.com/questions/24318405/spring-data-rest-validator - documentacion para agregar validadores usando HATEOAS
 public class Course {
 
 	@Id
