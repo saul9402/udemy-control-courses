@@ -15,6 +15,9 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -47,6 +50,7 @@ public class User extends Person implements Serializable {
 	private String userName;
 
 	@Column(length = 350)
+	@JsonProperty(access = Access.WRITE_ONLY)
 	private String password;
 	/**
 	 * https://stackoverflow.com/questions/3110266/how-to-set-a-default-entity-property-value-with-hibernate
