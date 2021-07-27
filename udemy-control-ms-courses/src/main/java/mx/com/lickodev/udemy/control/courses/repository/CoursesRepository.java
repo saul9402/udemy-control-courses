@@ -25,10 +25,24 @@ public interface CoursesRepository extends JpaRepository<Course, Long> {
 
 	Page<Course> findAllByNameContaining(@Param("name") String name, Pageable page);
 
-	Page<Course> findAllByNameContainingOrUrlContainingOrDescriptionContaining(@Param("name") String name,
-			@Param("url") String url, @Param("description") String description, Pageable page);
+	/**
+	 * Para que este metodo funcione de manera efectiva se debe mandar el mismo
+	 * valor a los 3 parametros
+	 * 
+	 * @param name
+	 * @param url
+	 * @param description
+	 * @param page
+	 * @return
+	 */
+	Page<Course> findAllByNameContainingIgnoreCaseOrUrlContainingIgnoreCaseOrDescriptionContainingIgnoreCase(
+			@Param("name") String name, @Param("url") String url, @Param("description") String description,
+			Pageable page);
 
-	boolean existsByNameContaining(@Param("name") String name);	
+	Page<Course> findAllByNameLikeOrUrlLikeOrDescriptionLike(@Param("name") String name, @Param("url") String url,
+			@Param("description") String description, Pageable page);
+
+	boolean existsByNameContaining(@Param("name") String name);
 
 	/**
 	 * 
