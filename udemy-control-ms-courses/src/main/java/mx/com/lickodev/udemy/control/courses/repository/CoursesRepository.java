@@ -25,6 +25,23 @@ public interface CoursesRepository extends JpaRepository<Course, Long> {
 
 	Page<Course> findAllByNameContaining(@Param("name") String name, Pageable page);
 
-	boolean existsByNameContaining(@Param("name") String name);
+	Page<Course> findAllByNameContainingOrUrlContainingOrDescriptionContaining(@Param("name") String name,
+			@Param("url") String url, @Param("description") String description, Pageable page);
+
+	boolean existsByNameContaining(@Param("name") String name);	
+
+	/**
+	 * 
+	 * Se puede "ocultar" métodos predefinidos por el API de JPA de esta forma para
+	 * evitar ataques maliciosos.
+	 * 
+	 * https://docs.spring.io/spring-data/rest/docs/current/reference/html/#customizing-sdr.hiding-repository-crud-methods
+	 * 
+	 * @Override
+	 * @RestResource(exported = false) void delete(Course entity);
+	 * 
+	 * @Override
+	 * @RestResource(exported = false) void deleteById(Long id);
+	 */
 
 }

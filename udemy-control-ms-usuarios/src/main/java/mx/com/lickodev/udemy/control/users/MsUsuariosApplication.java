@@ -5,10 +5,14 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.context.annotation.Import;
 
-@SpringBootApplication
+import mx.com.lickodev.udemy.control.commons.config.repository.RepositoryConfig;
+
 @EnableEurekaClient
+@SpringBootApplication
 @EnableAutoConfiguration
+@Import(RepositoryConfig.class)
 @EntityScan(basePackages = { "mx.com.lickodev.udemy.control.commons.entity" })
 public class MsUsuariosApplication {
 

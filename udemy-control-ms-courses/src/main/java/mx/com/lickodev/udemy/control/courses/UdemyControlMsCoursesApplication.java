@@ -6,10 +6,21 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Import;
 
-@SpringBootApplication
+import mx.com.lickodev.udemy.control.commons.config.repository.RepositoryConfig;
+
+/**
+ * 
+ * @author saul_
+ *
+ *         https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/context/annotation/Configuration.html
+ *
+ */
 @EnableEurekaClient
+@SpringBootApplication
 @EnableAutoConfiguration
+@Import(RepositoryConfig.class)
 @EntityScan(basePackages = { "mx.com.lickodev.udemy.control.commons.entity" })
 @ComponentScan(basePackages = { "mx.com.lickodev.udemy.control.commons.*" })
 public class UdemyControlMsCoursesApplication {

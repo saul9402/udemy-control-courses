@@ -13,6 +13,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -26,7 +27,13 @@ import lombok.NoArgsConstructor;
 @Table(name = "courses", uniqueConstraints = {
 		@UniqueConstraint(columnNames = { "name" }, name = "unique_name_course_contraint"),
 		@UniqueConstraint(columnNames = { "url" }, name = "unique_url_course_contraint") })
-//https://www.baeldung.com/spring-data-rest-validators; https://stackoverflow.com/questions/24318405/spring-data-rest-validator - documentacion para agregar validadores usando HATEOAS
+/**
+ * @author saul_
+ *
+ *
+ *         https://www.baeldung.com/spring-data-rest-validators;
+ *         https://stackoverflow.com/questions/24318405/spring-data-rest-validator
+ */
 public class Course {
 
 	@Id
@@ -37,6 +44,20 @@ public class Course {
 	private String name;
 
 	@Column(length = 400)
+	/**
+	 * @RestResource(exported = false)
+	 * 
+	 *                        Al no funcionar la anotacion de arriba para
+	 *                        propiedades de las entidades se utiliza el
+	 *                        comportamiento del siguiente enlace para ocultar
+	 *                        determinadas propiedades (contraseñas por ejemplo)
+	 * 
+	 *                        https://stackoverflow.com/questions/12505141/only-using-jsonignore-during-serialization-but-not-deserialization;
+	 *                        https://docs.spring.io/spring-data/rest/docs/current/reference/html/#representations.serializers-and-deserializers.abstract-classes
+	 *                        -> Posible uso para serializar o deserializar algunas
+	 *                        propiedades como fechas que a veces generan problemas.
+	 * @JsonProperty(access = Access.WRITE_ONLY)
+	 */
 	private String description;
 
 	@Column(nullable = false, length = 300)
@@ -45,4 +66,10 @@ public class Course {
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "courses")
 	private Set<Account> accounts = new HashSet<>();
 
+	/**
+	 * @CreatedBy private User user;
+	 * 
+	 *            https://docs.spring.io/spring-data/jpa/docs/1.7.0.RELEASE/reference/html/#
+	 *            auditing
+	 */
 }
