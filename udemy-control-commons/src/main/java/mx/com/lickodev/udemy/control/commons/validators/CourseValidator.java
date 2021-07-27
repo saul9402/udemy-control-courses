@@ -26,11 +26,11 @@ public class CourseValidator implements Validator {
 	public void validate(Object obj, Errors errors) {
 		Course course = (Course) obj;
 		if (checkInputString(course.getName())) {
-			errors.rejectValue(null, "nombre-vacio", null, null);
+			errors.rejectValue(null, "nombre-vacio", null, "nombre-vacio");
 		}
 
 		if (checkInputString(course.getUrl())) {
-			errors.rejectValue(null, "url.empty");
+			errors.rejectValue(null, "url-vacio", null, "url-vacio");
 		}
 	}
 

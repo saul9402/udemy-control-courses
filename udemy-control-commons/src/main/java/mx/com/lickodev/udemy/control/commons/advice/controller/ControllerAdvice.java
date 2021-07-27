@@ -12,6 +12,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -94,10 +95,10 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
 	public ResponseEntity<Object> handleAccessDeniedException(Exception ex, WebRequest request) {
 		RepositoryConstraintViolationException nevEx = (RepositoryConstraintViolationException) ex;
 
-		String errors = nevEx.getErrors().getAllErrors().stream().map(Object::toString)
+		String errors = nevEx.getErrors().getAllErrors().stream().map(ObjectError::getDefaultMessage)
 				.collect(Collectors.joining("\n"));
 
-		return new ResponseEntity<>(errors, new HttpHeaders(), HttpStatus.PARTIAL_CONTENT);
+		return new ResponseEntity<>(errors, new HttpHeaders(), HttpStatus.NOT_ACCEPTABLE);
 	}
 
 }
