@@ -2,10 +2,15 @@ package mx.com.lickodev.udemy.control.commons.advice.controller;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 
 import org.springframework.data.rest.core.RepositoryConstraintViolationException;
 import org.springframework.http.HttpHeaders;
@@ -99,6 +104,32 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
 				.collect(Collectors.joining("\n"));
 
 		return new ResponseEntity<>(errors, new HttpHeaders(), HttpStatus.NOT_ACCEPTABLE);
+	}
+
+	/**
+	 * 
+	 * Usando la anotación @Validated a nivel de controlador (aun siendo un rest
+	 * repository) es posible validar los parametros que se envian por la url para
+	 * evitar que lleguen al repositorio, este metodo "cacha" las excepciones que se
+	 * produzcan por esas validaciones y permite manipularlas antes de enviarlas al
+	 * usuario final.
+	 * 
+	 * https://www.javaquery.com/2018/02/passing-and-validating-requestparam-in.html?m=1
+	 * 
+	 * @param ex
+	 * @param request
+	 * @return
+	 */
+	@ExceptionHandler(ConstraintViolationException.class)
+	protected ResponseEntity<Object> handleConstraintViolationException(ConstraintViolationException ex,
+			HttpServletRequest request) {
+		try {
+			List<String> errors = ex.getConstraintViolations().stream().map(ConstraintViolation::getMessage)
+					.collect(Collectors.toList());
+			return new ResponseEntity<>(errors, new HttpHeaders(), HttpStatus.BAD_REQUEST);
+		} catch (Exception e) {
+			return new ResponseEntity<>(Arrays.asList(ex.getMessage()), new HttpHeaders(), HttpStatus.BAD_REQUEST);
+		}
 	}
 
 }
