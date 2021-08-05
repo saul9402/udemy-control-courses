@@ -2,6 +2,7 @@ package mx.com.lickodev.udemy.control.autentication.security;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
@@ -11,6 +12,7 @@ import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.stereotype.Service;
 
 import mx.com.lickodev.udemy.control.autentication.service.impl.users.UserServiceFeignImpl;
+import mx.com.lickodev.udemy.control.commons.entity.users.Role;
 import mx.com.lickodev.udemy.control.commons.entity.users.User;
 
 @Service
@@ -27,7 +29,9 @@ public class TokenEnhacerServiceImpl implements TokenEnhancer {
 		aditionalTokenInfo.put("firstSurname", usuario.getFirstSurname());
 		aditionalTokenInfo.put("secondSurname", usuario.getSecondSurname());
 		aditionalTokenInfo.put("email", usuario.getEmail());
-		//aditionalTokenInfo.put("roles", usuario.getRoles());
+		aditionalTokenInfo.put("username", usuario.getUserName());
+		aditionalTokenInfo.put("roles",
+				usuario.getRoles().stream().map(Role::getRoleName).collect(Collectors.joining(",")));
 		DefaultOAuth2AccessToken defaultOAuth2AccessToken = (DefaultOAuth2AccessToken) accessToken;
 		defaultOAuth2AccessToken.setAdditionalInformation(aditionalTokenInfo);
 		return defaultOAuth2AccessToken;

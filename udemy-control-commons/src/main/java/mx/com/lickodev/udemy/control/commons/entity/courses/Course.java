@@ -12,12 +12,13 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-
+import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import mx.com.lickodev.udemy.control.commons.constants.ErrorMessage;
 
 @Data
 @Entity
@@ -41,9 +42,9 @@ public class Course {
 	private Long id;
 
 	@Column(nullable = false, length = 150)
+	@Size(min = 3, max = 150, message = ErrorMessage.LABEL_ERROR_NAME_MIN_MAX)
 	private String name;
 
-	@Column(length = 400)
 	/**
 	 * @RestResource(exported = false)
 	 * 
@@ -58,9 +59,12 @@ public class Course {
 	 *                        propiedades como fechas que a veces generan problemas.
 	 * @JsonProperty(access = Access.WRITE_ONLY)
 	 */
+	@Column(length = 400)
+	@Size(min = 20, max = 400, message = ErrorMessage.LABEL_ERROR_DESCRIPTION_MIN_MAX)
 	private String description;
 
 	@Column(nullable = false, length = 300)
+	@Size(min = 10, max = 300, message = ErrorMessage.LABEL_ERROR_URL_MIN_MAX)
 	private String url;
 
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "courses")

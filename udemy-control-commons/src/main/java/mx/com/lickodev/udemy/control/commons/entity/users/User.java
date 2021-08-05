@@ -15,8 +15,6 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -49,8 +47,12 @@ public class User extends Person implements Serializable {
 	@Column(length = 60)
 	private String userName;
 
+	/**
+	 * https://stackoverflow.com/questions/12638209/reason-cannot-pass-null-or-empty-values-to-constructor-in-spring-security
+	 * Se elimina la anotación ya que no permitia validar al usuario en el login
+	 * WRITE_ONLY
+	 */
 	@Column(length = 350)
-	@JsonProperty(access = Access.WRITE_ONLY)
 	private String password;
 	/**
 	 * https://stackoverflow.com/questions/3110266/how-to-set-a-default-entity-property-value-with-hibernate

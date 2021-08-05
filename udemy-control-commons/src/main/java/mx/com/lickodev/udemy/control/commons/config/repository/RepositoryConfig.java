@@ -8,6 +8,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
 import mx.com.lickodev.udemy.control.commons.entity.courses.Course;
+import mx.com.lickodev.udemy.control.commons.entity.users.Person;
 import mx.com.lickodev.udemy.control.commons.entity.users.User;
 import mx.com.lickodev.udemy.control.commons.validators.CourseValidator;
 
@@ -16,7 +17,7 @@ public class RepositoryConfig implements RepositoryRestConfigurer {
 
 	@Override
 	public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config, CorsRegistry cors) {
-		config.exposeIdsFor(User.class, Course.class);
+		config.exposeIdsFor(User.class, Course.class, Person.class);
 		/**
 		 * Si quieres ocultar algunos metodos del repository para evitar que actualicen,
 		 * borren o agreguen info si tú no lo deseas.

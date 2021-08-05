@@ -17,3 +17,6 @@ spring:
     - dev
 server:
   port: ${PORT:0}
+#https://www.baeldung.com/spring-security-registered-filters; https://howtodoinjava.com/spring-boot2/logging/configure-logging-application-yml/
+logging:  level: 
+    org.springframework.security.web.FilterChainProxy: debug
