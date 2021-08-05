@@ -18,6 +18,8 @@ import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
+import mx.com.lickodev.udemy.control.commons.constants.CommonUtil;
+
 @RefreshScope
 @Configuration
 @EnableAuthorizationServer
@@ -70,7 +72,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	@Bean
 	public JwtAccessTokenConverter accessTokenConverter() {
 		JwtAccessTokenConverter tokenConverter = new JwtAccessTokenConverter();
-		tokenConverter.setSigningKey(env.getProperty("config.security.oauth.jwt.key"));
+		tokenConverter.setSigningKey(env.getProperty(CommonUtil.JWT_PROPERTY_KEY));
 		return tokenConverter;
 	}
 

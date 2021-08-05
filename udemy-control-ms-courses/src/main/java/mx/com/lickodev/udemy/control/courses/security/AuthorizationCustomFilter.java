@@ -23,6 +23,7 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
+import mx.com.lickodev.udemy.control.commons.constants.CommonUtil;
 
 public class AuthorizationCustomFilter extends BasicAuthenticationFilter {
 
@@ -37,9 +38,9 @@ public class AuthorizationCustomFilter extends BasicAuthenticationFilter {
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		String authorizationHeader = request.getHeader("Authorization");
+		String authorizationHeader = request.getHeader(CommonUtil.HEADER_AUTHORIZATION);
 
-		if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer")) {
+		if (authorizationHeader == null || !authorizationHeader.startsWith(CommonUtil.BEARER_PREFIX)) {
 			chain.doFilter(request, response);
 			return;
 		}
@@ -52,13 +53,13 @@ public class AuthorizationCustomFilter extends BasicAuthenticationFilter {
 	}
 
 	private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
-		String authorizationHeader = request.getHeader("Authorization");
+		String authorizationHeader = request.getHeader(CommonUtil.HEADER_AUTHORIZATION);
 
 		if (authorizationHeader == null) {
 			return null;
 		}
 
-		String token = authorizationHeader.replace("Bearer", "").trim();
+		String token = authorizationHeader.replace(CommonUtil.BEARER_PREFIX, "").trim();
 
 		/**
 		 * https://www.baeldung.com/java-base64-encode-and-decode;
@@ -66,14 +67,14 @@ public class AuthorizationCustomFilter extends BasicAuthenticationFilter {
 		 */
 		Jws<Claims> claims = Jwts.parser()
 				.setSigningKey(
-						Base64.getEncoder().encodeToString(env.getProperty("config.security.oauth.jwt.key").getBytes()))
+						Base64.getEncoder().encodeToString(env.getProperty(CommonUtil.JWT_PROPERTY_KEY).getBytes()))
 				.parseClaimsJws(token);
 
-		String userName = claims.getBody().get("username").toString();
+		String userName = claims.getBody().get(CommonUtil.JWT_CLAIM_USERNAME).toString();
 		/**
 		 * https://www.baeldung.com/convert-array-to-list-and-list-to-array
 		 */
-		List<String> roles = Arrays.asList(claims.getBody().get("roles").toString().split(","));
+		List<String> roles = Arrays.asList(claims.getBody().get(CommonUtil.JWT_CLAIM_ROLES).toString().split(","));
 
 		if (userName == null) {
 			return null;

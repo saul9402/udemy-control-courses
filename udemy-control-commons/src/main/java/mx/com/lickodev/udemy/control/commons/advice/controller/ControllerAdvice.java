@@ -92,12 +92,15 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
 	 * https://www.baeldung.com/spring-data-rest-validators;
 	 * https://stackoverflow.com/questions/24318405/spring-data-rest-validator
 	 * 
+	 * Captura las excepciones o errores causados por la clase personalizada
+	 * CourseValidator
+	 * 
 	 * @param ex
 	 * @param request
 	 * @return
 	 */
 	@ExceptionHandler({ RepositoryConstraintViolationException.class })
-	public ResponseEntity<Object> handleAccessDeniedException(Exception ex, WebRequest request) {
+	public ResponseEntity<Object> handleCustomConstraintViolationException(Exception ex, WebRequest request) {
 		RepositoryConstraintViolationException nevEx = (RepositoryConstraintViolationException) ex;
 
 		String errors = nevEx.getErrors().getAllErrors().stream().map(ObjectError::getDefaultMessage)
@@ -115,6 +118,9 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
 	 * usuario final.
 	 * 
 	 * https://www.javaquery.com/2018/02/passing-and-validating-requestparam-in.html?m=1
+	 * 
+	 * Caputra las excepciones causadas por el API de validacion de Java, ya se un
+	 * unico parametro o un objeto completo.
 	 * 
 	 * @param ex
 	 * @param request

@@ -14,7 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 /**
  * https://stackoverflow.com/questions/42632163/how-preauthorize-checks-the-roles
  */
-public class WebSecurity extends WebSecurityConfigurerAdapter {
+public class GlobalWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private Environment environment;
@@ -22,7 +22,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable();
-		http.authorizeRequests().antMatchers("*/**").authenticated().and()
+
+		http.authorizeRequests().antMatchers("*/**").authenticated().anyRequest().authenticated().and()
 		.addFilter(new AuthorizationCustomFilter(authenticationManager(), environment));
 		http.headers().frameOptions().disable();
 	}

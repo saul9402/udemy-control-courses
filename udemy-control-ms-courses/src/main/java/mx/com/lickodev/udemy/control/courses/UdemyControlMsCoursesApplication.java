@@ -22,7 +22,7 @@ import mx.com.lickodev.udemy.control.commons.config.repository.RepositoryConfig;
 @EnableEurekaClient
 @SpringBootApplication
 @EnableAutoConfiguration
-@Import(RepositoryConfig.class)
+@Import({ RepositoryConfig.class })
 @EntityScan(basePackages = { "mx.com.lickodev.udemy.control.commons.entity" })
 @ComponentScan(basePackages = { "mx.com.lickodev.udemy.control.commons.*", "mx.com.lickodev.udemy.control.courses.*" })
 public class UdemyControlMsCoursesApplication {
