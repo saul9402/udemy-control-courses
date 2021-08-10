@@ -15,7 +15,6 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -36,7 +35,19 @@ import lombok.NoArgsConstructor;
  * https://stackoverflow.com/questions/16564789/changing-the-generated-name-of-a-foreign-key-in-hibernate
  * https://docs.jboss.org/hibernate/orm/5.1/userguide/html_single/chapters/domain/inheritance.html
  */
-@PrimaryKeyJoinColumn(name = "person_id", foreignKey = @ForeignKey(name = "fk_users_persons"))
+@PrimaryKeyJoinColumn(name = "id", foreignKey = @ForeignKey(name = "fk_users_persons"), referencedColumnName = "id")
+/**
+ * @author saul_
+ * 
+ *         Se cambia definicion de la llave primaria con la que se hace el join
+ *         column, se llama antes person_id y se cambio solo por id, esto para
+ *         poder utilizar projections en los respositorios ya que de no hacerlo
+ *         asi se encontraba una discrepancia entre los nombres de el DTO de
+ *         projection, el select y la propia entidad, para evitra dicha
+ *         discrepancia de nombres se opta por cambiar el nombre de la columna
+ *         de esta tabla (entidad)
+ * 
+ */
 public class User extends Person implements Serializable {
 
 	/**
@@ -69,11 +80,15 @@ public class User extends Person implements Serializable {
 	@Column(nullable = false, columnDefinition = "tinyint default true")
 	private boolean accountNonLocked;
 
+	/**
+	 * Al realizar el cambio de nombre de la columna de user se tiene que cambiar
+	 * aqui también para poder seguir haciendo la relación.
+	 */
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "users_roles", joinColumns = {
-			@JoinColumn(name = "person_id", referencedColumnName = "id") }, inverseJoinColumns = {
+			@JoinColumn(name = "id", referencedColumnName = "id") }, inverseJoinColumns = {
 					@JoinColumn(name = "role_id", referencedColumnName = "id") }, uniqueConstraints = {
-							@UniqueConstraint(columnNames = { "person_id",
+							@UniqueConstraint(columnNames = { "id",
 									"role_id" }, name = "unique_users_roles_constraint") }, foreignKey = @ForeignKey(name = "fk_user_id"), inverseForeignKey = @ForeignKey(name = "fk_role_id"))
 	private List<Role> roles;
 
