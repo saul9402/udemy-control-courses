@@ -10,21 +10,23 @@ import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import mx.com.lickodev.udemy.control.autentication.service.impl.users.UserServiceFeignImpl;
+import mx.com.lickodev.udemy.control.autentication.service.users.UserService;
 import mx.com.lickodev.udemy.control.commons.entity.users.Role;
 import mx.com.lickodev.udemy.control.commons.entity.users.User;
 
 @Service
+@Transactional(readOnly = true)
 public class TokenEnhacerServiceImpl implements TokenEnhancer {
 
 	@Autowired
-	private UserServiceFeignImpl userServiceFeignImpl;
+	private UserService userServiceImpl;
 
 	@Override
 	public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
 		Map<String, Object> aditionalTokenInfo = new HashMap<>();
-		User usuario = userServiceFeignImpl.findByUsername(authentication.getName());
+		User usuario = userServiceImpl.findByUsername(authentication.getName());
 		aditionalTokenInfo.put("firstName", usuario.getFirstName());
 		aditionalTokenInfo.put("firstSurname", usuario.getFirstSurname());
 		aditionalTokenInfo.put("secondSurname", usuario.getSecondSurname());

@@ -11,21 +11,24 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import feign.FeignException;
 import lombok.extern.slf4j.Slf4j;
+import mx.com.lickodev.udemy.control.autentication.service.users.UserService;
 
 @Slf4j
 @Service
+@Transactional(readOnly = true)
 public class UserDetailsServiceImpl implements UserDetailsService {
 
 	@Autowired
-	private UserServiceFeignImpl userServiceFeignImpl;
+	private UserService userServiceImpl;
 
 	@Override
 	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
 		try {
-			mx.com.lickodev.udemy.control.commons.entity.users.User user = userServiceFeignImpl.findByUsername(userName);
+			mx.com.lickodev.udemy.control.commons.entity.users.User user = userServiceImpl.findByUsername(userName);
 			List<GrantedAuthority> authorities = user.getRoles().stream()
 					.map(role -> new SimpleGrantedAuthority(role.getRoleName()))
 					.peek(authority -> log.info("Role: {}", authority.getAuthority())).collect(Collectors.toList());
