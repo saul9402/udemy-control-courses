@@ -1,4 +1,4 @@
-package mx.com.lickodev.udemy.control.courses.security;
+package mx.com.lickodev.udemy.control.users.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -26,7 +26,7 @@ public class GlobalWebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.csrf().disable();
 
 		http.authorizeRequests().antMatchers("*/**").authenticated().anyRequest().authenticated().and()
-		.addFilter(new AuthorizationCustomFilter(authenticationManager(), environment));
+				.addFilter(new AuthorizationCustomFilter(authenticationManager(), environment));
 		http.headers().frameOptions().disable();
 	}
 

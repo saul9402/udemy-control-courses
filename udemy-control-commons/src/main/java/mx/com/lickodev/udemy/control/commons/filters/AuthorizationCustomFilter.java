@@ -1,4 +1,4 @@
-package mx.com.lickodev.udemy.control.courses.security;
+package mx.com.lickodev.udemy.control.commons.filters;
 
 import java.io.IOException;
 import java.util.Arrays;
