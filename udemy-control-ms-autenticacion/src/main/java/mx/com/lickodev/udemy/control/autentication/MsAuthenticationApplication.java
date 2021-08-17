@@ -14,7 +14,8 @@ import org.springframework.context.annotation.ComponentScan;
 @EnableFeignClients
 //@Import(RepositoryConfig.class)
 @EntityScan(basePackages = { "mx.com.lickodev.udemy.control.commons.entity.*" })
-@ComponentScan(basePackages = { "mx.com.lickodev.udemy.control.autentication.*", "mx.com.lickodev.udemy.control.autentication.feignclients.*" })
+@ComponentScan(basePackages = { "mx.com.lickodev.udemy.control.autentication.*",
+		"mx.com.lickodev.udemy.control.autentication.feignclients.*" })
 public class MsAuthenticationApplication {
 
 	public static void main(String[] args) {
